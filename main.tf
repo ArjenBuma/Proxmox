@@ -15,9 +15,10 @@ provider "proxmox" {
 }
 
 resource "proxmox_vm_qemu" "test_vm" {
-  name        = "test-vm"
+  count = var.vm_count
+  name        = "test-vm-${count.index + 1}"
   target_node = var.pm_node
-  vmid        = 9000
+  vmid        = 9000 + count.index
   cores       = 1
   memory      = 512
   scsihw      = "virtio-scsi-pci"
